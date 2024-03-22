@@ -39,6 +39,35 @@
             </div>
         </div>
     </nav>
+    <!-- Tabela -->
+    <div class="panel-body" th:switch="${cardapios}">
+        <div class="alert alert-warning" th:case="null">
+            Não existem cardápios
+        </div>
+        <div class="table-responsive" th:case="*">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr th:each="cardapio : ${cardapios}">
+                        <td th:text="${cardapio.nome}"></td>
+                        <td th:text="${cardapio.descricao}"></td>
+                        <td th:text="${cardapio.preco}"></td>
+                        <td>
+                            <a class="btn btn-warning" th:href="@{/editar/{id}(id=${cardapio.id})}">Editar</a>
+                            <a class="btn btn-danger" th:href="@{/remover/{id}(id=${cardapio.id})}">Remover</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>

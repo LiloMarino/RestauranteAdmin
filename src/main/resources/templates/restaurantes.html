@@ -41,7 +41,7 @@
     </nav>
     <!-- Tabela -->
     <div class="panel-body" th:switch="${restaurantes}">
-        <div class="alert alert-info" th:case="null">
+        <div class="alert alert-warning" th:case="null">
             Não existem restaurantes cadastrados
         </div>
         <div class="table-responsive" th:case="*">
