@@ -39,6 +39,33 @@
             </div>
         </div>
     </nav>
+    <!-- Tabela -->
+    <div class="panel-body" th:switch="${restaurantes}">
+        <div class="alert alert-info" th:case="null">
+            Não existem restaurantes cadastrados
+        </div>
+        <div class="table-responsive" th:case="*">
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Cardápio</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                    <tr th:each="restaurante : ${restaurantes}">
+                        <td th:text="${restaurante.nome}"></td>
+                        <td><a class="btn text-white" style="background-color: #249da8;" th:href="@{/cardapio/{id}(id=${restaurante.id})}">Ver Cardápio</a></td>
+                        <td>
+                            <a class="btn btn-warning" th:href="@{/editar/{id}(id=${restaurante.id})}">Editar</a>
+                            <a class="btn btn-danger" th:href="@{/remover/{id}(id=${restaurante.id})}">Remover</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 
 </html>
