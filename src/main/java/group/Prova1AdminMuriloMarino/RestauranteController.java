@@ -54,12 +54,12 @@ public class RestauranteController {
     }
 
     @PostMapping("/adicionar-restaurante")
-    public String novoRestaurante(@Valid Restaurante produto, BindingResult result) {
+    public String novoRestaurante(@Valid Restaurante restaurante, BindingResult result) {
         if (result.hasErrors()) {
             return "/novo-restaurante";
         }
 
-        restauranteRepository.save(produto);
+        restauranteRepository.save(restaurante);
         return "redirect:/index";
     }
 
@@ -69,7 +69,7 @@ public class RestauranteController {
             BindingResult result) {
         if (result.hasErrors()) {
             restauranteAtualizado.setId(id);
-            return "atualizar-produto";
+            return "editar-restaurante";
         }
 
         restauranteRepository.save(restauranteAtualizado);
