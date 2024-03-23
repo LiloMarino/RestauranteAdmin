@@ -36,15 +36,6 @@ public class RestauranteController {
         return "editar-restaurante";
     }
 
-    @GetMapping("/cardapio/{id}")
-    public String mostrarCardapioRestaurante(@PathVariable("id") int id, Model model) {
-        Restaurante restaurante = restauranteRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
-
-        model.addAttribute("restaurante", restaurante);
-        return "cardapio";
-    }
-
     @GetMapping("/remover/restaurante/{id}")
     public String removerRestaurante(@PathVariable("id") int id) {
         Restaurante restaurante = restauranteRepository.findById(id)

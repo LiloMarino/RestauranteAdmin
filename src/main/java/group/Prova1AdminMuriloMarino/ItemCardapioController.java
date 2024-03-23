@@ -16,10 +16,20 @@ public class ItemCardapioController {
     ItemCardapioRepository itemCardapioRepository;
 
     @Autowired
-    RestauranteRepository  restauranteRepository;
+    RestauranteRepository restauranteRepository;
+
+    @GetMapping("/cardapio/{id}")
+    public String mostrarCardapioRestaurante(@PathVariable("id") int id, Model model) {
+        Restaurante restaurante = restauranteRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
+        Iterable<ItemCardapio> cardapios = itemCardapioRepository.findByRestauranteId(id);
+        model.addAttribute("restaurante", restaurante);
+        model.addAttribute("cardapios", cardapios.iterator().hasNext() ? cardapios : null);
+        return "cardapio";
+    }
 
     @GetMapping("/novo-cardapio/{id}")
-    public String mostrarNovoCardapio(ItemCardapio cardapio, @PathVariable("id") int id, Model model){
+    public String mostrarNovoCardapio(ItemCardapio cardapio, @PathVariable("id") int id, Model model) {
         Restaurante restaurante = restauranteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
         model.addAttribute("restaurante", restaurante);
@@ -33,12 +43,11 @@ public class ItemCardapioController {
             return "redirect:/novo-cardapio/" + id;
         }
         Restaurante restaurante = restauranteRepository.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
+                .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
         cardapio.setRestaurante(restaurante);
 
         itemCardapioRepository.save(cardapio);
         return "redirect:/cardapio/" + id;
     }
-
 
 }
