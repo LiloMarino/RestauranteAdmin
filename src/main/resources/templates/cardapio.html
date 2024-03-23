@@ -61,7 +61,7 @@
                     <tr th:each="cardapio : ${cardapios}">
                         <td th:text="${cardapio.nome}"></td>
                         <td th:text="${cardapio.descricao}"></td>
-                        <td th:text="${cardapio.preco}"></td>
+                        <td th:text="${cardapio.precoString}"></td>
                         <td>
                             <a class="btn btn-warning" th:href="@{/editar/cardapio/{id}(id=${cardapio.id})}">Editar</a>
                             <a class="btn btn-danger" th:href="@{/remover/cardapio/{id}(id=${cardapio.id})}">Remover</a>

@@ -1,5 +1,7 @@
 package group.Prova1AdminMuriloMarino;
 
+import java.text.DecimalFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -51,6 +53,11 @@ public class ItemCardapio {
 
     public double getPreco() {
         return preco;
+    }
+
+    public String getPrecoString() {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        return "R$" + df.format(preco);
     }
 
     public void setPreco(double preco) {
