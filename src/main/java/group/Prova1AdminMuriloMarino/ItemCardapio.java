@@ -8,6 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 public class ItemCardapio {
@@ -18,6 +19,7 @@ public class ItemCardapio {
     private String nome;
     private String descricao;
     @NotNull(message = "O preço do item do cardápio é obrigatório")
+    @Positive(message = "O preço deve ser positivo")
     private double preco;
     @ManyToOne
     @JoinColumn(name = "id_restaurante", nullable = false)

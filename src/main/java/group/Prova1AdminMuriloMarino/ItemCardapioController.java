@@ -37,6 +37,24 @@ public class ItemCardapioController {
         return "novo-cardapio";
     }
 
+    @GetMapping("/editar/cardapio/{id}")
+    public String mostrarEditarCardapio(@PathVariable("id") int id, Model model) {
+        ItemCardapio cardapio = itemCardapioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
+
+        model.addAttribute("cardapio", cardapio);
+        return "editar-cardapio";
+    }
+
+    @GetMapping("/remover/cardapio/{id}")
+    public String removerCardapio(@PathVariable("id") int id) {
+        ItemCardapio cardapio = itemCardapioRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
+        int idRestaurante = cardapio.getRestaurante().getId();
+        itemCardapioRepository.delete(cardapio);
+        return "redirect:/cardapio/" + idRestaurante;
+    }
+
     @PostMapping("/adicionar-cardapio/{id}")
     public String novoCardapio(@PathVariable("id") int id, @Valid ItemCardapio cardapio, BindingResult result) {
         if (result.hasErrors()) {
@@ -48,6 +66,20 @@ public class ItemCardapioController {
 
         itemCardapioRepository.save(cardapio);
         return "redirect:/cardapio/" + id;
+    }
+
+    @PostMapping("/atualizar/cardapio/{id}/restaurante/{idRestaurante}")
+    public String atualizarCardapio(@PathVariable("id") int id, @PathVariable("idRestaurante") int idRestaurante,
+            @Valid ItemCardapio itemCardapioAtualizado,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            return "redirect:/editar/cardapio/" + id;
+        }
+        Restaurante restaurante = restauranteRepository.findById(idRestaurante)
+                .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
+        itemCardapioAtualizado.setRestaurante(restaurante);
+        itemCardapioRepository.save(itemCardapioAtualizado);
+        return "redirect:/cardapio/" + itemCardapioAtualizado.getRestaurante().getId();
     }
 
 }

@@ -63,8 +63,8 @@
                         <td th:text="${cardapio.descricao}"></td>
                         <td th:text="${cardapio.preco}"></td>
                         <td>
-                            <a class="btn btn-warning" th:href="@{/editar/{id}(id=${cardapio.id})}">Editar</a>
-                            <a class="btn btn-danger" th:href="@{/remover/{id}(id=${cardapio.id})}">Remover</a>
+                            <a class="btn btn-warning" th:href="@{/editar/cardapio/{id}(id=${cardapio.id})}">Editar</a>
+                            <a class="btn btn-danger" th:href="@{/remover/cardapio/{id}(id=${cardapio.id})}">Remover</a>
                         </td>
                     </tr>
                 </tbody>
