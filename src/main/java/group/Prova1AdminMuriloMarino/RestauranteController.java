@@ -63,4 +63,17 @@ public class RestauranteController {
         return "redirect:/index";
     }
 
+    @PostMapping("/atualizar/{id}")
+    public String atualizarRestaurante(@PathVariable("id") int id,
+            @Valid Restaurante restauranteAtualizado, // O que o valid faz?
+            BindingResult result) {
+        if (result.hasErrors()) {
+            restauranteAtualizado.setId(id);
+            return "atualizar-produto";
+        }
+
+        restauranteRepository.save(restauranteAtualizado);
+        return "redirect:/index";
+    }
+
 }
