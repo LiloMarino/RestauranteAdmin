@@ -58,8 +58,8 @@
                         <td th:text="${restaurante.nome}"></td>
                         <td><a class="btn text-white" style="background-color: #249da8;" th:href="@{/cardapio/{id}(id=${restaurante.id})}">Ver Cardápio</a></td>
                         <td>
-                            <a class="btn btn-warning" th:href="@{/editar/{id}(id=${restaurante.id})}">Editar</a>
-                            <a class="btn btn-danger" th:href="@{/remover/{id}(id=${restaurante.id})}">Remover</a>
+                            <a class="btn btn-warning" th:href="@{/editar/restaurante/{id}(id=${restaurante.id})}">Editar</a>
+                            <a class="btn btn-danger" th:href="@{/remover/restaurante/{id}(id=${restaurante.id})}">Remover</a>
                         </td>
                     </tr>
                 </tbody>

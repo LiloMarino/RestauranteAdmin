@@ -41,7 +41,7 @@
     </nav>
     <!-- Form -->
     <div class="container-fluid">
-        <form th:action="@{/atualizar/{id}(id=${restaurante.id})}" th:object="${restaurante}" method="post">
+        <form th:action="@{/atualizar/restaurante/{id}(id=${restaurante.id})}" th:object="${restaurante}" method="post">
             <div class="form-group">
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome: </label>

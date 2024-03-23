@@ -27,7 +27,7 @@ public class RestauranteController {
         return "novo-restaurante";
     }
 
-    @GetMapping("/editar/{id}")
+    @GetMapping("/editar/restaurante/{id}")
     public String mostrarEditarRestaurante(@PathVariable("id") int id, Model model) {
         Restaurante restaurante = restauranteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
@@ -45,7 +45,7 @@ public class RestauranteController {
         return "cardapio";
     }
 
-    @GetMapping("/remover/{id}")
+    @GetMapping("/remover/restaurante/{id}")
     public String removerRestaurante(@PathVariable("id") int id) {
         Restaurante restaurante = restauranteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
@@ -63,7 +63,7 @@ public class RestauranteController {
         return "redirect:/index";
     }
 
-    @PostMapping("/atualizar/{id}")
+    @PostMapping("/atualizar/restaurante/{id}")
     public String atualizarRestaurante(@PathVariable("id") int id,
             @Valid Restaurante restauranteAtualizado, // O que o valid faz?
             BindingResult result) {
