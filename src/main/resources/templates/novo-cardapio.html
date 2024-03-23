@@ -44,7 +44,7 @@
     </nav>
     <!-- Form -->
     <div class="container-fluid">
-        <form th:action="@{/adicionar-cardapio}" th:object="${cardapio}" method="post">
+        <form th:action="@{/adicionar-cardapio/{id}(id=${restaurante.id})}" th:object="${cardapio}" method="post">
             <div class="form-group">
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome: </label>
