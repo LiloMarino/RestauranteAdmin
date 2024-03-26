@@ -23,7 +23,7 @@ public class RestauranteController {
     }
 
     @GetMapping("/novo-restaurante")
-    public String mostrarNovoRestaurante(Restaurante restaurante) { // Porque precisa desse parâmetro?
+    public String mostrarNovoRestaurante(Restaurante restaurante) {
         return "novo-restaurante";
     }
 
@@ -56,7 +56,7 @@ public class RestauranteController {
 
     @PostMapping("/atualizar/restaurante/{id}")
     public String atualizarRestaurante(@PathVariable("id") int id,
-            @Valid Restaurante restauranteAtualizado, // O que o valid faz?
+            @Valid Restaurante restauranteAtualizado,
             BindingResult result) {
         if (result.hasErrors()) {
             restauranteAtualizado.setId(id);

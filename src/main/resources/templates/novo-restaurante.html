@@ -46,7 +46,8 @@
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome: </label>
                     <input type="text" class="form-control" name="nome" id="nome" th:field="*{nome}"
-                        placeholder="Digite o nome do restaurante" maxlength="100" required />
+                        placeholder="Digite o nome do restaurante" maxlength="100"/>
+                    <span th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}" style="color: red;"></span>
                 </div>
             </div>
             <button type="submit" class="btn btn-success">Adicionar</button>

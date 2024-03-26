@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
 
@@ -33,7 +34,9 @@ public class ItemCardapioController {
         Restaurante restaurante = restauranteRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
         model.addAttribute("restaurante", restaurante);
-        model.addAttribute("cardapio", cardapio); // Porque eu tive que fazer isso?
+        if (!model.containsAttribute("cardapio")) {
+            model.addAttribute("cardapio", cardapio);
+        }
         return "novo-cardapio";
     }
 
@@ -42,7 +45,9 @@ public class ItemCardapioController {
         ItemCardapio cardapio = itemCardapioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
 
-        model.addAttribute("cardapio", cardapio);
+        if (!model.containsAttribute("cardapio")) {
+            model.addAttribute("cardapio", cardapio);
+        }
         return "editar-cardapio";
     }
 
@@ -56,8 +61,11 @@ public class ItemCardapioController {
     }
 
     @PostMapping("/adicionar-cardapio/{id}")
-    public String novoCardapio(@PathVariable("id") int id, @Valid ItemCardapio cardapio, BindingResult result) {
+    public String novoCardapio(@PathVariable("id") int id, @Valid ItemCardapio cardapio, BindingResult result,
+            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.cardapio", result);
+            redirectAttributes.addFlashAttribute("cardapio", cardapio);
             return "redirect:/novo-cardapio/" + id;
         }
         Restaurante restaurante = restauranteRepository.findById(id)
@@ -71,13 +79,15 @@ public class ItemCardapioController {
     @PostMapping("/atualizar/cardapio/{id}/restaurante/{idRestaurante}")
     public String atualizarCardapio(@PathVariable("id") int id, @PathVariable("idRestaurante") int idRestaurante,
             @Valid ItemCardapio itemCardapioAtualizado,
-            BindingResult result) {
-        if (result.hasErrors()) {
-            return "redirect:/editar/cardapio/" + id;
-        }
+            BindingResult result, RedirectAttributes redirectAttributes) {
         Restaurante restaurante = restauranteRepository.findById(idRestaurante)
                 .orElseThrow(() -> new IllegalArgumentException("ID:" + id));
         itemCardapioAtualizado.setRestaurante(restaurante);
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.cardapio", result);
+            redirectAttributes.addFlashAttribute("cardapio", itemCardapioAtualizado);
+            return "redirect:/editar/cardapio/" + id;
+        }
         itemCardapioRepository.save(itemCardapioAtualizado);
         return "redirect:/cardapio/" + itemCardapioAtualizado.getRestaurante().getId();
     }
